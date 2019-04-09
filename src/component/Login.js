@@ -13,13 +13,17 @@ const styles = (theme) => ({
         padding: 20,
     },
     container: {
+        height: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
+
     },
     inputHolder: {
         display: "flex",
         flexDirection: "column",
+        margin: 10,
     },
     input: {
         padding: 10,
@@ -27,6 +31,10 @@ const styles = (theme) => ({
         outline: "none",
         borderRadius: 5,
         border: "1px solid grey",
+        width: 200,
+    },
+    inputLabel: {
+        margin: "10px 0",
     }
 });
 
@@ -53,7 +61,7 @@ class Login extends React.Component {
             <div className={classes.container}>
                 <h3 className={classes.title}>Login, please...</h3>
                 <div className={classes.inputHolder}>
-                    <label className="input_label" htmlFor="username">Username</label>
+                    <label className={classes.inputLabel} htmlFor="username">Username</label>
                     <input type="text"
                            placeholder="Type your username..."
                            id="username"
@@ -62,15 +70,15 @@ class Login extends React.Component {
                            value={this.state.username}/>
                 </div>
                 <div className={classes.inputHolder}>
-                    <label className="input_label" htmlFor="password">Password</label>
-                    <input type="text"
+                    <label  className={classes.inputLabel} htmlFor="password">Password</label>
+                    <input type="password"
                            className={classes.input}
                            placeholder="Type your password..."
                            id="password"
                            onChange={(event) => this.handleChange("password", event.target.value)}
                            value={this.state.password}/>
                 </div>
-                <Button variant="contained" color="primary" onClick={this.handleLogin}>Create</Button>
+                <Button style={{margin: 20}} variant="contained" color="primary" onClick={this.handleLogin}>Login</Button>
             </div>
         )
     }

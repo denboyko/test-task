@@ -6,6 +6,8 @@ import EmployeeTable from "./EmployeeTable";
 import Modal from "./utils/Modal";
 import EmployeeModal from "./EmployeeModal";
 import {logout} from "../api/Auth";
+import Pagination from "./utils/Pagination";
+// import Pagination from "./utils/Pagination";
 // import Pagination from "./utils/Pagination";
 
 
@@ -42,6 +44,18 @@ const styles = (theme) => ({
         textAlign: "center",
         padding: 20,
         color: "grey",
+    },
+    container: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+    },
+    search: {
+        padding: 10,
+        fontSize: 14,
+        outline: "none",
+        borderRadius: 5,
+        border: "1px solid grey",
     }
 });
 
@@ -56,6 +70,7 @@ class Home extends React.Component {
             search: "",
             perPage: 10,
             count: 10,
+            total: 0,
         };
     }
 
@@ -64,7 +79,10 @@ class Home extends React.Component {
     }
 
     searchEmployees() {
-        searchByName(this.state.search, this.state.page, this.state.perPage, (employees) => this.setState({employees}));
+        searchByName(this.state.search, this.state.page, this.state.perPage, (page) => this.setState({
+            employees: page.data,
+            total: page.total
+        }));
     }
 
     handleSearch(search) {
@@ -111,16 +129,15 @@ class Home extends React.Component {
                 </div>
 
                 <div className={classes.content}>
-                    <div className="container">
+                    <div className={classes.container}>
                         <div>
                             <p>Search</p>
-                            <input className="search"
+                            <input className={classes.search}
                                    placeholder="Type employee name..."
                                    value={this.state.search}
                                    onChange={(event) => this.handleSearch(event.target.value)}
                             />
                         </div>
-
                         <div>
                             <Button variant="contained" color="primary" onClick={() => this.handleCreate()}>Create a new
                                 employee</Button>
@@ -132,14 +149,14 @@ class Home extends React.Component {
                                            handleEdit={(id) => this.handleEdit(id)}
                                            reload={() => this.searchEmployees()}
                                            employees={this.state.employees}/>
-                            {/*<Pagination*/}
-                            {/*page={this.state.page}*/}
-                            {/*rowsPerPage={this.state.perPage}*/}
-                            {/*count={this.state.count}*/}
-                            {/*onChangePage={(event, value) => this.handleChangePage(value)}*/}
-                            {/*/>        ]*/}
+                            <Pagination
+                                page={this.state.page}
+                                rowsPerPage={this.state.perPage}
+                                count={this.state.total}
+                                onChangePage={(event, value) => this.handleChangePage(value)}
+                            />
                         </div> :
-                        <p className={classes.noEmployee}>There is no employees yet.</p>}
+                        <p className={classes.noEmployee}>There are no employees yet.</p>}
                 </div>
 
                 <Modal

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './App.css';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Home from "./component/Home";
 import Login from "./component/Login";
@@ -31,9 +30,7 @@ class App extends Component {
     }
 
     checkAuth(){
-        console.log("login_check");
         let token = cookie.load(security_cookie_name);
-        console.log(token);
         if (token) {
             this.setState({authenticated: true});
         } else {
@@ -43,7 +40,6 @@ class App extends Component {
 
     render() {
         const {classes} = this.props;
-        console.log('home');
         return (
             <div className={classes.app}>
                     <Switch>
